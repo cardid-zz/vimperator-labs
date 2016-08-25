@@ -88,6 +88,14 @@ const Browser = Module("browser", {
                 commandline.open("", "open " + url, modes.EX);
             });
 
+        mappings.add([modes.NORMAL], ["s"],
+            "Search engines and keywords URLs",
+            function () { commandline.open("", "open " + options.defsearch + " ", modes.EX); });
+
+        mappings.add([modes.NORMAL], ["S"],
+            "Search engines and keywords URLs",
+            function () { commandline.open("", "tabopen " + options.defsearch + " ", modes.EX); });
+
         mappings.add([modes.NORMAL], ["t"],
             "Open one or more URLs in a new tab",
             function () { commandline.open("", "tabopen ", modes.EX); });
