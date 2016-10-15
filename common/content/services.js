@@ -11,12 +11,17 @@
  * @constructor
  */
 const Services = Module("services", {
+    ABOUT: "@mozilla.org/network/protocol/about;1?what=",
     init: function () {
         this.classes = {};
         this.jsm = window.Services;
+        let autoCompleteSearchQueryValue = "unifiedcomplete";
+        if (this.jsm["vc"].compare(VERSION, "49") < 0) {
+            autoCompleteSearchQueryValue = "history";
+        }
         this.services = {
             "autoCompleteSearch": {
-                class_: "@mozilla.org/autocomplete/search;1?name=history",
+                class_: "@mozilla.org/autocomplete/search;1?name=" + autoCompleteSearchQueryValue,
                 iface:  Ci.nsIAutoCompleteSearch
             },
             "bookmarks": {

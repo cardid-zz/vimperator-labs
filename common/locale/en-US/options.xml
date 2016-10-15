@@ -937,10 +937,10 @@
 
 
 <item>
-    <tags>'previouspattern'</tags>
-    <spec>'previouspattern'</spec>
+    <tags>'prevpattern' 'previouspattern'</tags>
+    <spec>'prevpattern' 'previouspattern'</spec>
     <type>stringlist</type>
-    <default><![CDATA[\bprev|previous\b,^<$,^(<<|«)$,^(<|«),(<|«)$]]></default>
+    <default><![CDATA[\bprev\b|\bprevious\b,^<$,^(<<|«)$,^(<|«),(<|«)$]]></default>
     <description>
         <p>
             Patterns to use when guessing the <o>previous</o> page in a document
