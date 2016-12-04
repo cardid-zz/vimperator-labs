@@ -581,6 +581,16 @@
     </description>
 </item>
 
+<item>
+    <tags>'sth' 'showtexthints'</tags>
+    <spec>'showtexthints' 'sth'</spec>
+    <type>boolean</type>
+    <default>on</default>
+    <description>
+        <p>Whether to show text picked by <ex>:hintinputs</ex> after the hint label.</p>
+    </description>
+</item>
+
 
 <item>
     <tags>'hm' 'hintmatching'</tags>
@@ -722,7 +732,7 @@
     <tags>'status'</tags>
     <spec>'status'</spec>
     <type>stringlist</type>
-    <default>input,location,bookmark,history,tabcount,position</default>
+    <default>input,location,bookmark,history,ssl,tabcount,position</default>
     <description>
         <p>Determines which elements to show in the status bar.</p>
 
@@ -739,6 +749,27 @@
             <dt>ssl</dt>        <dd>Show an icon when the current buffer is connecting with SSL.</dd>
             <dt>zoomlevel</dt>  <dd>The main content's zoom level</dd>
         </dl>
+    </description>
+</item>
+
+
+<item>
+    <tags>'slv' 'statuslinevisibility'</tags>
+    <spec>'statuslinevisibility' 'slv'</spec>
+    <type>string</type>
+    <default>auto</default>
+    <description>
+        <p>Controls the visibility of the statusline.</p>
+
+        <p>Possible values:</p>
+
+        <dl>
+            <dt>auto</dt>      <dd>Hide statusline in fullscreen automatically</dd>
+            <dt>hidden</dt>    <dd>Never show the statusline</dd>
+            <dt>visible</dt>   <dd>Always show the statusline</dd>
+        </dl>
+
+        <note>The statusline is always visible when a command is entered.</note>
     </description>
 </item>
 

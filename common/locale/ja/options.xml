@@ -570,6 +570,16 @@
     </description>
 </item>
 
+<item>
+    <tags>'sth' 'showtexthints'</tags>
+    <spec>'showtexthints' 'sth'</spec>
+    <type>boolean</type>
+    <default>off</default>
+    <description>
+        <p><ex>:hintinputs</ex>のテクストを見せますかどうか。</p>
+    </description>
+</item>
+
 
 <item>
     <tags>'hm' 'hintmatching'</tags>
@@ -592,7 +602,7 @@
                 現在の単語がマッチしない場合、次の単語の最初からマッチがなされます。
                 単語はリンクに現れる順番でマッチされます。
                 入力された文字列が空白を含む場合、文字列は空白で区切られます。
-                これらの文字列は最初の単語からマッチしていき、リンクに現れる順に単語がマッチしていきます。 
+                これらの文字列は最初の単語からマッチしていき、リンクに現れる順に単語がマッチしていきます。
             </dd>
             <dt>firstletters</dt>
             <dd>
@@ -726,7 +736,7 @@
     <tags>'status'</tags>
     <spec>'status'</spec>
     <type>stringlist</type>
-    <default>input,location,bookmark,history,tabcount,position</default>
+    <default>input,location,bookmark,history,ssl,tabcount,position</default>
     <description>
         <p>ステータスラインに表示する要素を示します。</p>
 
