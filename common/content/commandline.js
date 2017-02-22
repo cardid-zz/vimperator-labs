@@ -167,7 +167,7 @@ const CommandLine = Module("commandline", {
         // we need to save the mode which we were in before opening the command line
         // this is then used if we focus the command line again without the "official"
         // way of calling "open"
-        this._currentExtendedMode = null;     // the extended mode which we last openend the command line for
+        this._currentExtendedMode = null;     // the extended mode which we last opened the command line for
         this._currentPrompt = null;
         this._currentCommand = null;
 
@@ -1842,7 +1842,7 @@ const ItemList = Class("ItemList", {
             nodes.message.style.display = context.message ? "block" : "none";
             nodes.waiting.style.display = waiting ? "block" : "none";
 
-            for (let [i, row] in Iterator(context.getRows(start, end, this._doc)))
+            for (let [i, row] of context.getRows(start, end, this._doc))
                 nodes[i] = row;
             for (let [i, row] in util.Array.iteritems(nodes)) {
                 if (!row)

@@ -347,7 +347,7 @@ const CompletionContext = Class("CompletionContext", {
     get ignoreCase() {
         if ("_ignoreCase" in this)
             return this._ignoreCase;
-        // smart case by default unless overriden above
+        // smart case by default unless overridden above
         return this._ignoreCase = !/[A-Z]/.test(this.filter);
     },
     set ignoreCase(val) this._ignoreCase = val,
@@ -495,7 +495,7 @@ const CompletionContext = Class("CompletionContext", {
         return util.map(util.range(start, end, step), function (i) items[i]);
     },
 
-    getRows: function getRows(start, end, doc) {
+    getRows: function* getRows(start, end, doc) {
         let self = this;
         let items = this.items;
         let cache = this.cache.rows;

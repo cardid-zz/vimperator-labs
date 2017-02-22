@@ -32,14 +32,14 @@ const JavaScript = Module("javascript", {
         }
     },
 
-    iter: function iter(obj, toplevel) {
+    iter: function* iter(obj, toplevel) {
         toplevel = !!toplevel;
         let seen = {};
 
         try {
             let orig = obj;
 
-            function iterObj(obj, toplevel) {
+            function* iterObj(obj, toplevel) {
                 if (Cu.isXrayWrapper(obj)) {
                     if (toplevel) {
                         yield {get wrappedJSObject() 0};
@@ -49,7 +49,7 @@ const JavaScript = Module("javascript", {
                     // run in page context, not in chrome context.
                     // However, as we really need to make sure, values coming
                     // from content scope are never used in unsecured eval(),
-                    // we dissallow unwrapping objects for now, unless the user
+                    // we disallow unwrapping objects for now, unless the user
                     // uses an (undocumented) option 'unwrapjsobjects'
                     else if (options.inspectcontentobjects) {
                         obj = obj.wrappedJSObject;
@@ -62,7 +62,7 @@ const JavaScript = Module("javascript", {
                         yield o;
             }
 
-            for (let obj in iterObj(orig, toplevel)) {
+            for (let obj of iterObj(orig, toplevel)) {
                 try {
                     for (let k of Object.getOwnPropertyNames(obj)) {
                         let name = "|" + k;

@@ -82,7 +82,7 @@ const Events = Module("events", {
                     for (let dir of dirs) {
                          liberator.log("Sourcing macros directory: " + dir.path);
 
-                        for (let file in dir.iterDirectory()) {
+                        for (let file of dir.iterDirectory()) {
                             if (file.exists() && !file.isDirectory() && file.isReadable() &&
                                 /^[\w_-]+(\.vimp)?$/i.test(file.leafName)) {
                                 let name = file.leafName.replace(/\.vimp$/i, "");
@@ -134,7 +134,7 @@ const Events = Module("events", {
 
     destroy: function () {
         liberator.log("Removing all event listeners");
-        for (let args in values(this.sessionListeners))
+        for (let args of values(this.sessionListeners))
             args[0].removeEventListener.apply(args[0], args.slice(1));
     },
 
@@ -402,7 +402,7 @@ const Events = Module("events", {
      * .liberatorShift these are set for characters that can never by
      * typed, but may appear in mappings, for example <Nop> is passed as
      * liberatorString, and liberatorShift is set when a user specifies
-     * <S-@> where @ is a non-case-changable, non-space character.
+     * <S-@> where @ is a non-case-changeable, non-space character.
      *
      * @param {string} keys The string to parse.
      * @returns {Array[Object]}
@@ -551,7 +551,7 @@ const Events = Module("events", {
                     }
                 }
 
-                if (!key) { // For alphabetical caracters
+                if (!key) { // For alphabetical characters
                     key = String.fromCharCode(event.keyCode); // Gives by default the uppercased version for keydown/keyup of normal keys
                     if (!event.shiftKey)
                         key = key.toLowerCase();

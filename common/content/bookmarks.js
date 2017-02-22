@@ -471,7 +471,7 @@ const Bookmarks = Module("bookmarks", {
         return node;
 
         function getFolderFromNode (node, title) {
-            for (let child in Bookmarks.iterateFolderChildren(node)) {
+            for (let child of Bookmarks.iterateFolderChildren(node)) {
                 if (child.title == title && child instanceof Ci.nsINavHistoryContainerResultNode) {
                     node.containerOpen = false;
                     return child;
@@ -480,7 +480,7 @@ const Bookmarks = Module("bookmarks", {
             return null;
         }
     },
-    iterateFolderChildren: function (node, onlyFolder, onlyWritable) {
+    iterateFolderChildren: function* (node, onlyFolder, onlyWritable) {
         if (!node.containerOpen)
             node.containerOpen = true;
 
@@ -506,7 +506,7 @@ const Bookmarks = Module("bookmarks", {
             function () {
                 let sh = history.session;
                 let jumps = Array.from(iter(sh))
-                                 .map(([idx, val]) => [
+                                 .map((val,idx) => [
                                      idx == sh.index ? ">" : "",
                                      Math.abs(idx - sh.index),
                                      val.title,
@@ -737,7 +737,9 @@ const Bookmarks = Module("bookmarks", {
                     context.generate = function () {
                         let [begin, end] = item.url.split("%s");
 
-                        return history.get({ uri: window.makeURI(begin), uriIsPrefix: true }).map(function (item) {
+                        return history.get({ domain: window.makeURI(begin).host, domainIsHost: true }).filter(function (item) {
+                            return item.url.startsWith(begin);
+                        }).map(function (item) {
                             let rest = item.url.length - end.length;
                             let query = item.url.substring(begin.length, rest);
                             if (item.url.substr(rest) == end && query.indexOf("&") == -1) {
@@ -807,7 +809,7 @@ const Bookmarks = Module("bookmarks", {
                 results.push(["TOOLBAR", "Bookmarks Toolbar"]);
             }
             if (folder) {
-                for (let child in Bookmarks.iterateFolderChildren(folder, onlyFolder, onlyWritable)) {
+                for (let child of Bookmarks.iterateFolderChildren(folder, onlyFolder, onlyWritable)) {
                     if (PlacesUtils.nodeIsSeparator(child))
                         continue;
 

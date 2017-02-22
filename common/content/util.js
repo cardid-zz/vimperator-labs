@@ -638,7 +638,7 @@ const Util = Module("util", {
      * @param {number} time The time in milliseconds between thread yields.
      * @returns {Iterator(Object)}
      */
-    interruptibleRange: function interruptibleRange(start, end, time) {
+    interruptibleRange: function* interruptibleRange(start, end, time) {
         let endTime = Date.now() + time;
         while (start < end) {
             if (Date.now() > endTime) {
@@ -663,6 +663,9 @@ const Util = Module("util", {
         try {
             const clipboard = Cc["@mozilla.org/widget/clipboard;1"].getService(Ci.nsIClipboard);
             const transferable = Cc["@mozilla.org/widget/transferable;1"].createInstance(Ci.nsITransferable);
+            if("init" in transferable) {
+                transferable.init(null);
+            }
 
             transferable.addDataFlavor("text/unicode");
 
