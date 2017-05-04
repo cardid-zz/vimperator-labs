@@ -530,6 +530,9 @@ const Buffer = Module("buffer", {
             Buffer.openUploadPrompt(elem);
             buffer.lastInputField = elem;
         }
+        else if (elem instanceof HTMLLabelElement && elem.control) {
+            Buffer.focusElement(elem.control);
+        }
         else {
             elem.focus();
 
@@ -635,6 +638,10 @@ const Buffer = Module("buffer", {
         }
         else if (elem instanceof HTMLInputElement && elem.type == "file") {
             Buffer.openUploadPrompt(elem);
+            return;
+        }
+        else if (elem instanceof HTMLLabelElement && elem.control) {
+            buffer.followLink(elem.control, where);
             return;
         }
 
@@ -1185,6 +1192,7 @@ const Buffer = Module("buffer", {
             liberator.assert(file.exists());
 
             elem.value = file.path;
+            elem.dispatchEvent(events.create(elem.ownerDocument, 'change', {}));
         }, {
             completer: completion.file,
             default: elem.value
@@ -1284,6 +1292,15 @@ const Buffer = Module("buffer", {
 
                 if (filename) {
                     let file = io.File(filename);
+
+                    if (file.exists() && file.isDirectory()) {
+                        if (doc.doctype !== null) {
+                            filename = OS.Path.join(filename, document.title + ".html");
+                        } else {
+                            filename = OS.Path.join(filename, filename = doc.location.pathname.split("/").pop());
+                        }
+                        file = io.File(filename)
+                    }
 
                     liberator.assert(!file.exists() || args.bang, "File exists (add ! to override)");
 
