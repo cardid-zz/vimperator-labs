@@ -838,22 +838,22 @@ const Liberator = Module("liberator", {
                     }
 
                     options.withContext(function () {
-                        browser.addTab(url, { postData: postdata });
+                        var newTab = browser.addTab(url, { postData: postdata });
                         if (where != liberator.NEW_BACKGROUND_TAB)
-                            browser.selectTabAtIndex(-1);
+                            browser.selectedTab = newTab;
                     });
                     break;
 
                 case liberator.NEW_PRIVATE_WINDOW:
                 case liberator.NEW_WINDOW:
-                    let sa = Cc["@mozilla.org/supports-array;1"].createInstance(Ci.nsISupportsArray);
+                    let sa = Cc["@mozilla.org/array;1"].createInstance(Ci.nsIMutableArray);
                     let wuri = Cc["@mozilla.org/supports-string;1"].createInstance(Ci.nsISupportsString);
                     wuri.data = url;
-                    sa.AppendElement(wuri);
-                    sa.AppendElement(null); // charset
-                    sa.AppendElement(null); // referrerURI
-                    sa.AppendElement(postdata);
-                    sa.AppendElement(null); // allowThirdPartyFixup
+                    sa.appendElement(wuri, false);
+                    sa.appendElement(null, false); // charset
+                    sa.appendElement(null, false); // referrerURI
+                    sa.appendElement(postdata, false);
+                    sa.appendElement(null, false); // allowThirdPartyFixup
 
                     let features = "chrome,dialog=no,all" + (where === liberator.NEW_PRIVATE_WINDOW ? ",private" : "");
                     let win = services.get("ww").openWindow(window, "chrome://browser/content/browser.xul", null, features, sa);
